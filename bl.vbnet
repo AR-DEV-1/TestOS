@@ -1,0 +1,20 @@
+global _start
+
+_start:
+    ; Initialize the stack pointer
+    mov esp, stack_end
+    
+    ; Load the kernel into memory
+    mov eax, kernel_start
+    mov ebx, 0x10000
+    mov ecx, kernel_size
+    mov edx, 0x02
+    int 0x13
+    
+    ; Jump to the kernel
+    jmp dword [kernel_start]
+
+; The stack
+section .bss
+    resb 8192
+stack_end:
